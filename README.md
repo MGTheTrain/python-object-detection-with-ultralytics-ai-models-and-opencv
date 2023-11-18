@@ -21,6 +21,12 @@ Simple Object detector app utilizing trained DETR models.
 
 ```sh
 pip install -r requirements.txt
+
+# if any errors occur upgrade pip packages in the following order
+pip install --upgrade numpy
+pip install --upgrade pillow requests pyyaml
+pip install --upgrade matplotlib scipy pandas seaborn ultralytics supervision
+pip install -r requirements.txt
 ```
 
 ### Run object detector application

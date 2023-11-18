@@ -18,7 +18,8 @@ class ObjectDetection:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print("Using Device: ", self.device)
         
-        self.model = RTDETR("rtdetr-l.pt")
+        self.model = RTDETR("rtdetr-l.pt") # large 
+        # self.model = RTDETR("rtdetr-x.pt") # extra large
         
         self.CLASS_NAMES_DICT = self.model.model.names
         

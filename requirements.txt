@@ -1,6 +1,13 @@
-torch 
-torchvision
+pillow
+requests 
+pyyaml
+matplotlib
+scipy
+pandas
+seaborn
 numpy
 opencv-python
 ultralytics
 supervision
+torch 
+torchvision
