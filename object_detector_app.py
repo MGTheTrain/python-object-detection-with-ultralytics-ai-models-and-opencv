@@ -6,7 +6,7 @@ from ultralytics import YOLO
 
 import supervision as sv
 
-from ultralytics.vit import RTDETR
+from ultralytics import RTDETR
 
 
 class ObjectDetection:
