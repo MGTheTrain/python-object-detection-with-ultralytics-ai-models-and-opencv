@@ -33,5 +33,5 @@ python.exe object_detector_app.py --help
 python.exe object_detector_app.py --model nano_yolov8
 
 # Object detection with pretrained large DETR model
-python.exe object_detector_app.py --model nano_yolov8
+python.exe object_detector_app.py --model large_detr
 ```
