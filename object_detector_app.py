@@ -16,9 +16,9 @@ class ObjectDetection:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print("Using Device: ", self.device)
         
-        self.model = YOLO("yolov8s.pt") # small
-        # self.model = RTDETR("rtdetr-l.pt") # large 
-        # self.model = RTDETR("rtdetr-x.pt") # extra large
+        self.model = YOLO("yolov8s.pt") # small , ~7 FPS on Windows OS with CPU
+        # self.model = RTDETR("rtdetr-l.pt") # large , ~1 FPS on Windows OS with CPU
+        # self.model = RTDETR("rtdetr-x.pt") # extra large ,
         self.CLASS_NAMES_DICT = self.model.model.names
         print(self.CLASS_NAMES_DICT)
         self.box_annotator = sv.BoxAnnotator(sv.ColorPalette.default(), thickness=3, text_thickness=3, text_scale=1.5)
