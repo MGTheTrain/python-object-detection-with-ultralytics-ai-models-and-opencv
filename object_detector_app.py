@@ -16,7 +16,8 @@ class ObjectDetection:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print("Using Device: ", self.device)
         
-        self.model = YOLO("yolov8s.pt") # small , ~7 FPS on Windows OS with CPU
+        self.model = YOLO("yolov8n.pt") # nano , ~10-12 FPS on Windows OS with CPU
+        # self.model = YOLO("yolov8s.pt") # small , ~7 FPS on Windows OS with CPU
         # self.model = RTDETR("rtdetr-l.pt") # large , ~1 FPS on Windows OS with CPU
         # self.model = RTDETR("rtdetr-x.pt") # extra large ,
         self.CLASS_NAMES_DICT = self.model.model.names
