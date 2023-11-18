@@ -21,12 +21,17 @@ Simple Object detector app utilizing trained DETR models. The code in [object_de
 ### Install pip packages
 
 ```sh
-pip install -r requirements.txt
+pip.exe install -r requirements.txt
 ```
 
 ### Run object detector application
 
 ```sh
-# python object_detector_app.py
-python3 object_detector_app.py
+python.exe object_detector_app.py --help
+
+# Object detection with pretrained nano YOLO V8 model
+python.exe object_detector_app.py --model nano_yolov8
+
+# Object detection with pretrained large DETR model
+python.exe object_detector_app.py --model nano_yolov8
 ```

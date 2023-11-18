@@ -33,8 +33,25 @@ class ObjectDetection:
         self.box_annotator = sv.BoxAnnotator(sv.ColorPalette.default(), thickness=3, text_thickness=3, text_scale=1.5)
 
     def plot_bboxes(self, results, frame):
-        # Your existing code for plotting bounding boxes remains the same
-        # ...
+        # Extract detections
+        boxes = results[0].boxes.cpu().numpy()
+        class_id = boxes.cls
+        conf = boxes.conf
+        xyxy = boxes.xyxy
+        
+        class_id = class_id.astype(np.int32)
+        # Setup detections for visualization
+        detections = sv.Detections(
+                    xyxy=xyxy,
+                    confidence=conf,
+                    class_id=class_id,
+                    )
+    
+        # Format custom labels
+        self.labels = [f"{self.CLASS_NAMES_DICT[class_id]} {confidence:0.2f}" for xyxy, mask, confidence, class_id, track_id in detections]
+        # Annotate and display frame
+        frame = self.box_annotator.annotate(scene=frame, detections=detections, labels=self.labels)
+        return frame
 
     def __call__(self):
         cap = cv2.VideoCapture(self.capture_index)
@@ -66,7 +83,7 @@ class ObjectDetection:
 if __name__ == "__main__":
     # Define argparse to accept model choice as an argument
     parser = argparse.ArgumentParser(description='Select pre-trained model for object detection.')
-    parser.add_argument('model', choices=['nano_yolov8', 'small_yolov8', 'large_detr', 'extra_large_detr'], help='Choose a model: nano_yolov8, small_yolov8, large_detr, extra_large_detr')
+    parser.add_argument("--model", type=str, choices=['nano_yolov8', 'small_yolov8', 'large_detr', 'extra_large_detr'], help='Choose a model: nano_yolov8, small_yolov8, large_detr, extra_large_detr')
     args = parser.parse_args()
 
     # Instantiate ObjectDetection class with the specified model choice
