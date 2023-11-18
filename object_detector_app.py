@@ -43,19 +43,6 @@ class ObjectDetection:
         # Annotate and display frame
         frame = self.box_annotator.annotate(scene=frame, detections=detections, labels=self.labels)
         return frame
-    
-    
-    def display_frame(self, frame):
-        # Convert BGR to RGB (OpenCV uses BGR, matplotlib uses RGB)
-        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        
-
-        cv2.imshow('Object Detector App', frame_rgb)
-        # # Display the frame using matplotlib
-        # plt.imshow(frame_rgb)
-        # plt.title('Object Detector App')
-        # plt.axis('off')  # Hide axes
-        # plt.show()
 
     def __call__(self):
         cap = cv2.VideoCapture(self.capture_index)
@@ -75,8 +62,7 @@ class ObjectDetection:
 
             cv2.putText(frame, f'FPS: {int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1.5, (0, 255, 0), 2)
 
-            # Display the frame using matplotlib
-            self.display_frame(frame)
+            cv2.imshow('Object Detector App', frame)
 
             if cv2.waitKey(5) & 0xFF == 27:
                 break
