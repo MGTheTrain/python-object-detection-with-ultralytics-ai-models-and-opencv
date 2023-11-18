@@ -1,4 +1,4 @@
-# python-object-detection-with-detr-and-opencv.git
+# python-object-detection-with-detr-and-opencv
 
 ## Table of Contents
 
