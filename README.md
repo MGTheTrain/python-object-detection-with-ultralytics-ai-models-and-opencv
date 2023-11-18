@@ -8,7 +8,7 @@
 
 ## Summary
 
-Simple Object detector app utilizing trained DETR models. The code in [object_detector_app.py](./object_detector_app.py) is copied from [rtdetrClass.py from niconielsen32](https://github.com/niconielsen32/DETR/blob/main/rtdetrClass.py).
+Simple Object detector app utilizing trained DETR models. The code in [object_detector_app.py](./object_detector_app.py) is based on [rtdetrClass.py from niconielsen32](https://github.com/niconielsen32/DETR/blob/main/rtdetrClass.py).
 
 ## References
 
