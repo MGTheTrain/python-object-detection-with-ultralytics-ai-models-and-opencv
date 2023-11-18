@@ -18,7 +18,8 @@ class ObjectDetection:
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print("Using Device: ", self.device)
         
-        self.model = RTDETR("rtdetr-l.pt") # large 
+        self.model = YOLO("yolov8s.pt") # small
+        # self.model = RTDETR("rtdetr-l.pt") # large 
         # self.model = RTDETR("rtdetr-x.pt") # extra large
         
         self.CLASS_NAMES_DICT = self.model.model.names
@@ -85,7 +86,6 @@ class ObjectDetection:
             cv2.imshow('YOLOv8 Detection', frame)
  
             if cv2.waitKey(5) & 0xFF == 27:
-                
                 break
         
         cap.release()

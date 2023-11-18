@@ -14,6 +14,7 @@ Simple Object detector app utilizing trained DETR models. The code in [object_de
 
 - [rtdetrClass.py from niconielsen32](https://github.com/niconielsen32/DETR/blob/main/rtdetrClass.py)
 - [Baidu's RT-DETR: A Vision Transformer-Based Real-Time Object Detector](https://docs.ultralytics.com/models/rtdetr/)
+- [YOLOv8](https://docs.ultralytics.com/models/yolov8/#usage)
 
 ## How to use
 
