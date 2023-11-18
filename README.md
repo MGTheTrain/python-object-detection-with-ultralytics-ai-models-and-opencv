@@ -1,4 +1,4 @@
-# python-object-detection-with-detr-and-opencv
+# python-object-detection-with-ultralytics-ai-models-and-opencv
 
 ## Table of Contents
 
@@ -8,7 +8,7 @@
 
 ## Summary
 
-Simple Object detector app utilizing trained DETR models. The code in [object_detector_app.py](./object_detector_app.py) is based on [rtdetrClass.py from niconielsen32](https://github.com/niconielsen32/DETR/blob/main/rtdetrClass.py).
+Simple Object detector app utilizing [ultralytics AI models](https://docs.ultralytics.com/models/). The detector primarily utilizes RTDETR and YOLOv8 models. The code in [object_detector_app.py](./object_detector_app.py) is based on [rtdetrClass.py from niconielsen32](https://github.com/niconielsen32/DETR/blob/main/rtdetrClass.py).
 
 ## References
 
