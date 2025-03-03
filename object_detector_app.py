@@ -3,8 +3,7 @@ import numpy as np
 import cv2
 from time import time
 from ultralytics import YOLO
-import matplotlib.pyplot as plt
-import argparse  # Import argparse for command-line arguments
+import argparse  
 
 import supervision as sv
 from ultralytics import RTDETR
@@ -15,42 +14,48 @@ class ObjectDetection:
         self.capture_index = capture_index
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
         print("Using Device: ", self.device)
-
-        # Select model based on argument
+        
         if model_choice == 'nano_yolov8':
-            self.model = YOLO("yolov8n.pt")  # nano
+            self.model = YOLO("yolov8n.pt")  
         elif model_choice == 'small_yolov8':
-            self.model = YOLO("yolov8s.pt")  # small
+            self.model = YOLO("yolov8s.pt")
+        elif model_choice == 'nano_yolov11':
+            self.model = YOLO("yolo11n.pt")  
+        elif model_choice == 'small_yolov11':
+            self.model = YOLO("yolo11s.pt")  
         elif model_choice == 'large_detr':
-            self.model = RTDETR("rtdetr-l.pt")  # large
+            self.model = RTDETR("rtdetr-l.pt")  
         elif model_choice == 'extra_large_detr':
-            self.model = RTDETR("rtdetr-x.pt")  # extra large
+            self.model = RTDETR("rtdetr-x.pt")  
         else:
             raise ValueError("Invalid model choice. Choose from 'nano_yolov8', 'small_yolov8', 'large_detr', 'extra_large_detr'.")
 
         self.CLASS_NAMES_DICT = self.model.model.names
         print(self.CLASS_NAMES_DICT)
-        self.box_annotator = sv.BoxAnnotator(sv.ColorPalette.default(), thickness=3, text_thickness=3, text_scale=1.5)
+
+        self.box_annotator = sv.BoxAnnotator(color=sv.Color(255, 0, 0), thickness=3)  
+        self.label_annotator = sv.LabelAnnotator()
 
     def plot_bboxes(self, results, frame):
-        # Extract detections
+        
         boxes = results[0].boxes.cpu().numpy()
         class_id = boxes.cls
         conf = boxes.conf
         xyxy = boxes.xyxy
         
         class_id = class_id.astype(np.int32)
-        # Setup detections for visualization
+              
         detections = sv.Detections(
                     xyxy=xyxy,
                     confidence=conf,
                     class_id=class_id,
                     )
-    
-        # Format custom labels
-        self.labels = [f"{self.CLASS_NAMES_DICT[class_id]} {confidence:0.2f}" for xyxy, mask, confidence, class_id, track_id in detections]
-        # Annotate and display frame
-        frame = self.box_annotator.annotate(scene=frame, detections=detections, labels=self.labels)
+        
+        self.labels = [f"{self.CLASS_NAMES_DICT[class_id[i]]} {conf[i]:0.2f}" for i in range(len(class_id))]
+
+        frame = self.box_annotator.annotate(scene=frame, detections=detections)
+        frame = self.label_annotator.annotate(scene=frame, detections=detections, labels=self.labels)
+
         return frame
 
     def __call__(self):
@@ -63,7 +68,7 @@ class ObjectDetection:
             start_time = time()
             ret, frame = cap.read()
 
-            results = self.model.predict(frame)
+            results = self.model.predict(frame, verbose=False)
             frame = self.plot_bboxes(results, frame)
 
             end_time = time()
@@ -81,11 +86,10 @@ class ObjectDetection:
 
 
 if __name__ == "__main__":
-    # Define argparse to accept model choice as an argument
     parser = argparse.ArgumentParser(description='Select pre-trained model for object detection.')
-    parser.add_argument("--model", type=str, choices=['nano_yolov8', 'small_yolov8', 'large_detr', 'extra_large_detr'], help='Choose a model: nano_yolov8, small_yolov8, large_detr, extra_large_detr')
+    parser.add_argument("--model", type=str, required=True, choices=['nano_yolov8', 'small_yolov8', 'nano_yolov11', 'small_yolov11', 'large_detr', 'extra_large_detr'], help='Choose a model: nano_yolov8, small_yolov8, nano_yolov11, small_yolov11, large_detr, extra_large_detr')
     args = parser.parse_args()
 
-    # Instantiate ObjectDetection class with the specified model choice
+    
     detector = ObjectDetection(capture_index=0, model_choice=args.model)
     detector()
